@@ -1,4 +1,4 @@
-package gafelix.microsservice.model;
+package gafelix.microservice.model;
 
 import com.sun.istack.NotNull;
 
