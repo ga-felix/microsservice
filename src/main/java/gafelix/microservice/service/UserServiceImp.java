@@ -3,7 +3,9 @@ package gafelix.microservice.service;
 import gafelix.microservice.model.User;
 import gafelix.microservice.repository.UserRepository;
 import gafelix.microservice.service.dto.UserDto;
+import gafelix.microservice.service.form.UserForm;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,23 @@ public class UserServiceImp implements UserService {
 
     private UserRepository userRepository;
 
-    public User save(UserDto userDto) {
-        return userRepository.save(userDto.toUser());
+    public User save(UserForm userForm) {
+        return userRepository.save(userForm.toUser());
     }
 
-    public void delete(UserDto userDto) {
-        userRepository.delete(userDto.toUser());
+    public List<User> saveAll(List<UserForm> userForms) {
+        return userRepository.saveAll(userForms
+                .stream()
+                .map(UserForm::toUser)
+                .toList());
+    }
+
+    public void deleteAllByNames(List<String> names) {
+        userRepository.deleteAllByNameIn(names);
+    }
+
+    public void deleteAllByCPF(List<String> cpfs) {
+        userRepository.deleteAllByCPFIn(cpfs);
     }
 
     public Page<User> findByNames(List<String> names, Pageable pageable) {
@@ -30,6 +43,18 @@ public class UserServiceImp implements UserService {
 
     public Page<User> findByCPF(List<String>  cpfs, Pageable pageable) {
         return userRepository.findAllByCPFIn(cpfs, pageable);
+    }
+
+    @SneakyThrows
+    public UserDto findById(Long id) {
+        var userEntity = userRepository.findById(id).orElseThrow();
+        return new UserDto(
+                userEntity.getId(),
+                userEntity.getName(),
+                userEntity.getEmail(),
+                userEntity.getAddress(),
+                userEntity.getCPF(),
+                userEntity.getPIS());
     }
 
 }
