@@ -23,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(UserForm userForm) {
+    public ResponseEntity<User> createUser(@RequestBody UserForm userForm) {
         var createdUser = userService.save(userForm);
         return ResponseEntity
                 .created(URI.create("/" + createdUser.getId()))

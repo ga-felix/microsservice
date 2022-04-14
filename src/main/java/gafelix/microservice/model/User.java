@@ -2,23 +2,18 @@ package gafelix.microservice.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class User {
+public class User implements Serializable {
 
     @Id @GeneratedValue
     private Long id;
@@ -26,13 +21,12 @@ public class User {
     private String name;
     @NotNull
     private String email;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @NotNull
-    @Cascade(CascadeType.PERSIST)
     private List<Address> address;
     @NotNull
-    private String CPF;
-    private String PIS;
+    private String cpf;
+    private String pis;
     @NotNull
     private String password;
 

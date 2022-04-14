@@ -33,16 +33,16 @@ public class UserServiceImp implements UserService {
         userRepository.deleteAllByNameIn(names);
     }
 
-    public void deleteAllByCPF(List<String> cpfs) {
-        userRepository.deleteAllByCPFIn(cpfs);
+    public void deleteAllByCpf(List<String> cpfs) {
+        userRepository.deleteAllByCpfIn(cpfs);
     }
 
     public Page<User> findByNames(List<String> names, Pageable pageable) {
         return userRepository.findAllByNameIn(names, pageable);
     }
 
-    public Page<User> findByCPF(List<String>  cpfs, Pageable pageable) {
-        return userRepository.findAllByCPFIn(cpfs, pageable);
+    public Page<User> findByCpf(List<String>  cpfs, Pageable pageable) {
+        return userRepository.findAllByCpfIn(cpfs, pageable);
     }
 
     @SneakyThrows
@@ -53,8 +53,8 @@ public class UserServiceImp implements UserService {
                 userEntity.getName(),
                 userEntity.getEmail(),
                 userEntity.getAddress(),
-                userEntity.getCPF(),
-                userEntity.getPIS());
+                userEntity.getCpf(),
+                userEntity.getPis());
     }
 
 }

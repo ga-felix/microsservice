@@ -8,6 +8,6 @@ public record UserDto(Long id,
                       String name,
                       String email,
                       List<Address> address,
-                      String CPF,
-                      String PIS) {
+                      String cpf,
+                      String pis) {
 }

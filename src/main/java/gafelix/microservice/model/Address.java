@@ -1,13 +1,14 @@
 package gafelix.microservice.model;
 
 import com.sun.istack.NotNull;
+import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Address {
+@Getter
+public class Address implements Serializable {
 
     @Id @GeneratedValue
     private Long id;
@@ -21,6 +22,7 @@ public class Address {
     private String zipCode;
     @NotNull
     private String street;
+    @NotNull
     private Long streetNumber;
     private String extra;
 
