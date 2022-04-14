@@ -33,14 +33,6 @@ public class UserServiceImp implements UserService {
         userRepository.deleteById(id);
     }
 
-    public Page<User> findByNames(List<String> names, Pageable pageable) {
-        return userRepository.findAllByNameIn(names, pageable);
-    }
-
-    public Page<User> findByCpf(List<String>  cpfs, Pageable pageable) {
-        return userRepository.findAllByCpfIn(cpfs, pageable);
-    }
-
     @SneakyThrows
     public UserDto findById(Long id) {
         var userEntity = userRepository.findById(id).orElseThrow();

@@ -2,8 +2,6 @@ package gafelix.microservice.service.form;
 
 import gafelix.microservice.model.Address;
 import gafelix.microservice.model.User;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 

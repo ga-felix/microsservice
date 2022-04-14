@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserForm userForm) {
+    public ResponseEntity<User> createUser(@RequestBody @Valid UserForm userForm) {
         var createdUser = userService.save(userForm);
         return ResponseEntity
                 .created(URI.create("/user/" + createdUser.getId()))

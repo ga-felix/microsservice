@@ -1,6 +1,7 @@
 package gafelix.microservice.service.dto;
 
 import gafelix.microservice.model.Address;
+import gafelix.microservice.model.User;
 
 import java.util.List;
 
