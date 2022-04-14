@@ -30,7 +30,6 @@ public class AuthController {
             var token = new TokenDto(jwtUtil.createToken(authentication), "Bearer");
             return ResponseEntity.ok(token);
         } catch(AuthenticationException e) {
-            log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
     }
