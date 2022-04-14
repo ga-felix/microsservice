@@ -26,8 +26,16 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody UserForm userForm) {
         var createdUser = userService.save(userForm);
         return ResponseEntity
-                .created(URI.create("/" + createdUser.getId()))
+                .created(URI.create("/user/" + createdUser.getId()))
                 .body(createdUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+        userService.deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 
 }

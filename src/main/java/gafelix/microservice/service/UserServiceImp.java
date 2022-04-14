@@ -29,12 +29,8 @@ public class UserServiceImp implements UserService {
                 .toList());
     }
 
-    public void deleteAllByNames(List<String> names) {
-        userRepository.deleteAllByNameIn(names);
-    }
-
-    public void deleteAllByCpf(List<String> cpfs) {
-        userRepository.deleteAllByCpfIn(cpfs);
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
     public Page<User> findByNames(List<String> names, Pageable pageable) {

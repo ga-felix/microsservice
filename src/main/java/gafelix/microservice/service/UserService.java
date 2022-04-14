@@ -12,8 +12,7 @@ public interface UserService {
 
     User save(UserForm userForm);
     List<User> saveAll(List<UserForm> userForms);
-    void deleteAllByNames(List<String> names);
-    void deleteAllByCpf(List<String> cpfs);
+    void deleteById(Long id);
     Page<User> findByNames(List<String> names, Pageable pageable);
     Page<User> findByCpf(List<String> cpfs, Pageable pageable);
     UserDto findById(Long id);

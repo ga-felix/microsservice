@@ -1,16 +1,20 @@
 package gafelix.microservice.controller;
 
+import gafelix.microservice.repository.UserRepository;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class ControllerTest {
 
     @Autowired
@@ -34,10 +38,8 @@ public class ControllerTest {
                 .post("/user")
                 .content(form)
                 .contentType("application/json"))
-                .andExpect(MockMvcResultMatchers
-                        .status().isCreated())
-                .andExpect(MockMvcResultMatchers
-                        .content().json(form));
+                .andExpect(status().isCreated())
+                .andExpect(content().json(form));
     }
 
     @Test
@@ -58,10 +60,16 @@ public class ControllerTest {
                 "\"pis\":\"00.00000.00-0\"}";
         mockMvc.perform(MockMvcRequestBuilders
                 .get("/user/1"))
-                .andExpect(MockMvcResultMatchers
-                        .status().isOk())
-                .andExpect(MockMvcResultMatchers
-                        .content().json(response));
+                .andExpect(status().isOk())
+                .andExpect(content().json(response));
+    }
+
+    @Test
+    @SneakyThrows
+    public void shouldDeleteCreatedUser() {
+        mockMvc.perform(MockMvcRequestBuilders
+                .delete("/user/5"))
+                .andExpect(status().isNoContent());
     }
 
 }

@@ -13,7 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Page<User> findAllByNameIn(List<String> names, Pageable pageable);
     Page<User> findAllByCpfIn(List<String> cpfs, Pageable pageable);
-    void deleteAllByNameIn(List<String> names);
-    void deleteAllByCpfIn(List<String> cpfs);
 
 }
