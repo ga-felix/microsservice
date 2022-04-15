@@ -1,6 +1,8 @@
 package gafelix.microservice.security.config;
 
+import gafelix.microservice.repository.UserRepository;
 import gafelix.microservice.security.jwt.JwtTokenFilter;
+import gafelix.microservice.security.jwt.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -25,7 +26,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
-    private JwtTokenFilter jwtTokenFilter;
+    private UserRepository userRepository;
+    private JwtUtil jwtUtil;
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -36,14 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth")
+                .antMatchers("/auth")
                 .permitAll()
                 .antMatchers("/h2-console/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(getJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new JwtTokenFilter(userRepository, jwtUtil), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

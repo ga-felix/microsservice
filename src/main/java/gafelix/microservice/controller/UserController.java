@@ -1,7 +1,9 @@
 package gafelix.microservice.controller;
 
+import gafelix.microservice.exception.UserNotFoundException;
 import gafelix.microservice.model.User;
 import gafelix.microservice.service.UserService;
+import gafelix.microservice.service.dto.UserDto;
 import gafelix.microservice.service.form.UserForm;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok()
                 .body(userService.findById(id));
     }

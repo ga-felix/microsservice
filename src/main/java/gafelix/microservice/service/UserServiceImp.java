@@ -1,16 +1,15 @@
 package gafelix.microservice.service;
 
+import gafelix.microservice.exception.UserNotFoundException;
 import gafelix.microservice.model.User;
 import gafelix.microservice.repository.UserRepository;
 import gafelix.microservice.service.dto.UserDto;
 import gafelix.microservice.service.form.UserForm;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import static java.lang.String.*;
 
 @Service
 @AllArgsConstructor
@@ -22,20 +21,17 @@ public class UserServiceImp implements UserService {
         return userRepository.save(userForm.toUser());
     }
 
-    public List<User> saveAll(List<UserForm> userForms) {
-        return userRepository.saveAll(userForms
-                .stream()
-                .map(UserForm::toUser)
-                .toList());
-    }
-
-    public void deleteById(Long id) {
+    public void deleteById(Long id) throws UserNotFoundException {
+        userRepository.findById(id).orElseThrow(
+                () -> new UsernameNotFoundException(
+                        format("User with %s id not found.", id)));
         userRepository.deleteById(id);
     }
 
-    @SneakyThrows
-    public UserDto findById(Long id) {
-        var userEntity = userRepository.findById(id).orElseThrow();
+    public UserDto findById(Long id) throws UserNotFoundException {
+        var userEntity = userRepository.findById(id).orElseThrow(
+                        () -> new UsernameNotFoundException(
+                                format("User with %s id not found.", id)));
         return new UserDto(
                 userEntity.getId(),
                 userEntity.getName(),

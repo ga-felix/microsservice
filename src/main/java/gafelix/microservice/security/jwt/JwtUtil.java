@@ -15,9 +15,9 @@ import java.util.Date;
 @Getter
 public class JwtUtil {
 
-    @Value("${forum.jwt.secret}")
+    @Value("${jwt.secret}")
     private String secret;
-    @Value("${forum.jwt.expiration}")
+    @Value("${jwt.expiration}")
     private String expiration;
 
     public String createToken(Authentication authentication) {

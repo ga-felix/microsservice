@@ -1,6 +1,5 @@
 package gafelix.microservice.controller;
 
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,8 +19,7 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @SneakyThrows
-    public void shouldCreateNewUser() {
+    public void shouldCreateNewUser() throws Exception {
         var form = "{\"name\": \"Gabriel\"," +
                 "\"email\": \"gabriel@email.com\"," +
                 "\"address\":" +
@@ -42,8 +40,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @SneakyThrows
-    public void shouldGetCreatedUser() {
+    public void shouldGetCreatedUser() throws Exception {
         var response = "{\"id\":1," +
                 "\"name\":\"Gabriel\"," +
                 "\"email\":\"gabriel@email.com\"," +
@@ -64,8 +61,7 @@ public class UserControllerTest {
     }
 
     @Test
-    @SneakyThrows
-    public void shouldDeleteCreatedUser() {
+    public void shouldDeleteCreatedUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
                 .delete("/user/5"))
                 .andExpect(status().isNoContent());
